@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dice Game 2020</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=font1|font2|etc" type="text/css"> -->
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <header role="heading">
+            <h1 class="h1">Dice Game 2020</h1>
+        </header>
+        <section class="status">
+            <h2 class="h2">Roll to Win!</h2>
+            <div class="round-wrap">
+                <h3 class="h3">Round
+                    <p id="roundOutput" class="round-total">1</p>
+                </h3>
+            </div>
+        </section>
+        <section class="board">
+            <div class="players-panel">
+                <div class="card player-card">
+                    <div class="card-body">
+                        <h4 id="p-1"></h4>
+                        <h4> Total: <span class="total" id="p-1-total"></span></h4>
+                    </div>
+                </div>
+                <div class="card player-card">
+                    <div class="card-body ">
+                        <h4 id="p-2"></h4>
+                        <h4> Total: <span class="total" id="p-2-total"></span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card action-card">
+                <div class="card-body">
+                    <div class="dice-wrap">
+                        <div class="dice-btn-wrap">
+                            <img src="img/dice-1.png" alt="dice" class="dice">
+                            <button class="btn btn-warning btn-sm">Hold</button>
+                        </div>
+                        <div class="dice-btn-wrap">
+                            <img src="img/dice-1.png" alt="dice" class="dice">
+                            <button class="btn btn-warning btn-sm">Hold</button>
+                        </div>
+                        <div class="dice-btn-wrap">
+                            <img src="img/dice-1.png" alt="dice" class="dice">
+                            <button class="btn btn-warning btn-sm">Hold</button>
+                        </div>
+                        <div class="dice-btn-wrap">
+                            <img src="img/dice-1.png" alt="dice" class="dice">
+                            <button class="btn btn-warning btn-sm">Hold</button>
+                        </div>
+                        <div class="dice-btn-wrap">
+                            <img src="img/dice-1.png" alt="dice" class="dice">
+                            <button class="btn btn-warning btn-sm">Hold</button>
+                        </div>
+                        <div class="cta">
+                            <button class="btn btn-danger">Roll</button>
+                            <button class="btn  btn-success">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="players-panel">
+                <div class="card player-card">
+                    <div class="card-body">
+                        <h4 id="p-3"></h4>
+                        <h4> Total: <span class="total" id="p-3-total"></span></h4>
+                    </div>
+                </div>
+                <div class="card player-card">
+                    <div class="card-body">
+                        <h4 id="p-4"></h4>
+                        <h4> Total: <span class="total" id="p-4-total"></span></h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="controls">
+            <button class="btn btn-primary btn-lg" onclick="playGame()">Start Game!</button>
+        </section>
+        </main>
+        <script src="app.js"></script>
+</body>
+
+</html>
