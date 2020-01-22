@@ -8,7 +8,6 @@
         background-image: linear-gradient(rgba(62, 20, 20, 0.2), rgba(62, 20, 20, 0.2));
         background-size: cover;
         background-position: center;
-        /* font-family: Lato; */
         font-weight: 300;
         position: relative;
         height: 100vh;
@@ -103,6 +102,11 @@
         cursor: pointer;
     }
     
+    .cta {
+        display: grid;
+        gap: .5rem;
+    }
+    
     .controls {
         display: flex;
         justify-content: center;
@@ -119,11 +123,6 @@
     .card-title {
         display: flex;
         justify-content: space-between;
-    }
-    
-    .cta {
-        display: grid;
-        gap: .5rem;
     }
     
     .card.action-card {
@@ -168,6 +167,6 @@
     
     .rules {
         overflow-y: scroll;
-        padding: 1rem;
+        padding: 1rem 1rem 1rem 1.25rem;
         width: 30%;
     }

@@ -1,8 +1,8 @@
+// Set Global variables
 let round = 0,
     currentPlayer,
-    currentPlayerIterator;
-
-
+    currentPlayerIterator,
+    winnerMsg = '';
 const users = new Array();
 const dice = new Array();
 
@@ -113,7 +113,6 @@ const loadDice = () => {
 
         // Display dice
         let diceDom = document.getElementById(tempId);
-        console.log('die :', diceDom);
         diceDom.src = tempPath;
 
         // Add value to button
@@ -123,6 +122,65 @@ const loadDice = () => {
     }
 }
 
+const getRandomPlayer = () => {
+    // Get random Player
+    let randUser = Math.floor(Math.random() * 4);
+    currentPlayer = users[randUser];
+    currentPlayerIterator = currentPlayer.player;
+}
+
+const startSimulation = () => {
+    let i = 0;
+    let totalTurns = users.length * 4;
+    for (i; i < totalTurns; i++) {
+        // setTimeout(() => {
+        //     simulateRounds();
+        // }, 1000);
+        simulateRounds();
+
+        if (i % 4 === 0) {
+            displayRound();
+        }
+    }
+}
+
+const getWinner = () => {
+    const tempArray = users;
+
+    // Check users array for lowest score(s)
+    tempArray.sort(function(a, b) { return a.total - b.total });
+    const winningTotal = tempArray[0].total;
+
+    //Determine winners name(s)
+    const winners = tempArray.filter(w => w.total === winningTotal);
+    let length = winners.length;
+    let lastWinner = length - 1;
+    winnerMsg = winners[0].name;
+    let i = 1;
+
+    if (length > 1) {
+        for (i; i < length; i++) {
+            if (i === lastWinner) {
+                winnerMsg += ` and ${winners[i].name}`;
+            } else {
+                winnerMsg += `, ${winners[i].name}`;
+            }
+        }
+        if (length === 2) {
+            winnerMsg += ' both';
+        } else {
+            winnerMsg += ' all';
+        }
+    }
+
+    winnerMsg += ` won with ${winningTotal} points!`
+
+    // Display winners
+    const displayWinner = document.getElementById('headText');
+    displayWinner.textContent = winnerMsg;
+}
+
+// CTA's
 const roll = () => {
     const tempArr = dice.filter(s => !s.held)
     let arrLength = tempArr.length;
@@ -165,10 +223,6 @@ const done = () => {
     loadDice();
 }
 
-setImgPath = (value) => {
-    return imgPath = 'img/dice-' + value + '.png';
-}
-
 // Simulated choice actual choice code is below
 const addChoice = () => {
 
@@ -176,81 +230,49 @@ const addChoice = () => {
 
     // Add value to Player total
     let player = currentPlayer;
-    console.log('player 1st :', player);
     player.total += parseInt(tempChoice);
-    console.log('player 2nd :', player);
 
     //Update score and count
     let playerTotal = document.getElementById(player.id + '-total');
     playerTotal.innerHTML = player.total;
-    console.log('users in add :', users);
 
     const displayCurrentPlayer = document.getElementById('currentPlayer');
     displayCurrentPlayer.textContent = `Player: ${player.name}    Total:  ${player.total}`;
-    // stopPropagation();
-}
 
-const displayRound = () => {
-    round += 1;
-    let displayRound = document.getElementById('roundOutput');
-    displayRound.innerHTML = round;
-    console.log('displayRound :', displayRound);
-}
+    // This would be used for an actual game not simulation
+    // Set button status
+    // e.target.innerHTML = 'Held';
 
-const getWinner = () => {
-    console.log('users bob :', users);
-    const tempArray = users;
-    console.log('tempArray :', tempArray);
-
-    // Check users array for lowest score(s)
-    tempArray.sort(function(a, b) { return a.total - b.total });
-    const winningTotal = tempArray[0].total;
-    console.log('mapArr :', tempArray);
-
-    //Determine winners name(s)
-    const winners = tempArray.filter(w => w.total === winningTotal);
-    let length = winners.length;
-    let winner = '';
-    let i = 0;
-    if (length === 1) {
-        winner += winners[i].name;
-    } else {
-        for (i; i < length; i++) {
-            winner += winners[i].name;
-            winner += ' and '
-        }
-    }
-    winner += ` won with ${winningTotal} points!`
-
-    // Display winners
-    const displayWinner = document.getElementById('headText');
-    displayWinner.textContent = winner;
-}
-
-const clearDom = () => {
-    users.length = 0;
-    dice.length = 0;
-    round = 0;
+    // Set dice held
+    // let targetId = e.target.id;
+    // dice[targetId].held = true;
 }
 
 const randomDie = () => {
     let die = Math.floor(Math.random() * 6) + 1;
+    // Set to test for tie
+    //die = 1;
     return die;
 }
 
-const getRandomPlayer = () => {
-    // Get random Player
-    let randUser = Math.floor(Math.random() * 4);
-    currentPlayer = users[randUser];
-    currentPlayerIterator = currentPlayer.player;
-    console.log('currentPlayer :', currentPlayer);
-}
-
-const setCurrentPlayer = () => {
-    let index = currentPlayerIterator;
-    index === 3 ? index = 0 : index += 1;
-    currentPlayerIterator = index;
-    currentPlayer = users[index];
+const simulateRounds = () => {
+    let roller = currentPlayerIterator;
+    switch (roller) {
+        case 4:
+            return chooseFour();
+            break;
+        case 3:
+            return chooseThreeOne();
+            break;
+        case 2:
+            return chooseTwo();
+            break
+        case 1:
+            return chooseOne();
+            break
+        default:
+            return chooseFour();
+    }
 }
 
 const chooseFour = () => {
@@ -291,76 +313,27 @@ const chooseOne = () => {
     }
     done();
 }
-const startSimulation = () => {
-    let i = 0;
-    let totalTurns = users.length * 4;
-    for (i; i < totalTurns; i++) {
-        // setTimeout(() => {
-        //     simulateRounds();
-        // }, 1000);
-        simulateRounds();
 
-        if (i % 4 === 0) {
-            displayRound();
-        }
-    }
-}
-const simulateRounds = () => {
-    let roller = currentPlayerIterator;
-    console.log('roller :', roller);
-
-    switch (roller) {
-        case 4:
-            return chooseFour();
-            break;
-        case 3:
-            return chooseThreeOne();
-            break;
-        case 2:
-            return chooseTwo();
-            break
-        case 1:
-            return chooseOne();
-            break
-        default:
-            return chooseFour();
-            // case 4:
-            //     return setTimeout(chooseFour, 1000);
-            //     break;
-            // case 3:
-            //     return setTimeout(chooseThreeOne, 1000);
-            //     break;
-            // case 2:
-            //     return setTimeout(chooseTwo, 1000);
-            //     break
-            // case 1:
-            //     return setTimeout(chooseOne, 1000);
-            //     break
-            // default:
-            //     return setTimeout(chooseFour, 1000);
-    }
+const displayRound = () => {
+    round += 1;
+    let displayRound = document.getElementById('roundOutput');
+    displayRound.innerHTML = round;
 }
 
-// use this for actual game
-// const addChoice = (e) => {
-//     // Get value emitted
-//     let tempChoice = e.target.value;
+const setCurrentPlayer = () => {
+    let index = currentPlayerIterator;
+    index === 3 ? index = 0 : index += 1;
+    currentPlayerIterator = index;
+    currentPlayer = users[index];
+}
 
-//     // Add value to Player total
-//     let player = currentPlayer;
-//     player.total += parseInt(tempChoice);
-//     console.log('a :', player);
+const clearDom = () => {
+    users.length = 0;
+    dice.length = 0;
+    round = 0;
+    winnerMsg = 'Roll to Win!';
+}
 
-//     //Update score and count
-//     let playerTotal = document.getElementById(player.id + '-total');
-//     playerTotal.innerHTML = player.total;
-
-
-//     // Set button status
-//     e.target.innerHTML = 'Held';
-
-//     // Set dice held
-//     let targetId = e.target.id;
-//     dice[targetId].held = true;
-
-// }
+setImgPath = (value) => {
+    return imgPath = 'img/dice-' + value + '.png';
+}

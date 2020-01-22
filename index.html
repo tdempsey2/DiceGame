@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Dice Game 2020</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
 
 <body>
@@ -18,7 +18,8 @@
         <section class="status">
             <h2 id="headText" class="h2">Roll to Win!</h2>
             <div class="round-wrap">
-                <h3 class="h3">Round
+                <h3 class="h3">
+                    Round
                     <p id="roundOutput" class="round-total">1</p>
                 </h3>
             </div>
@@ -28,70 +29,92 @@
                 <div class="card player-card">
                     <div class="card-body">
                         <h4 id="p-1" class="h4">Player</h4>
-                        <h4 class="h4"> Total: <span class="total" id="p-1-total">0</span></h4>
+                        <h4 class="h4">
+                            Total: <span class="total" id="p-1-total">0</span>
+                        </h4>
                     </div>
                 </div>
                 <div class="card player-card">
                     <div class="card-body ">
                         <h4 id="p-2" class="h4">Player</h4>
-                        <h4 class="h4"> Total: <span class="total" id="p-2-total">0</span></h4>
+                        <h4 class="h4">
+                            Total: <span class="total" id="p-2-total">0</span>
+                        </h4>
                     </div>
                 </div>
                 <div class="card player-card">
                     <div class="card-body">
                         <h4 id="p-3" class="h4">Player</h4>
-                        <h4 class="h4"> Total: <span class="total" id="p-3-total">0</span></h4>
+                        <h4 class="h4">
+                            Total: <span class="total" id="p-3-total">0</span>
+                        </h4>
                     </div>
                 </div>
                 <div class="card player-card">
                     <div class="card-body">
                         <h4 id="p-0" class="h4">Player</h4>
-                        <h4 class="h4"> Total: <span class="total" id="p-0-total">0</span></h4>
+                        <h4 class="h4">
+                            Total: <span class="total" id="p-0-total">0</span>
+                        </h4>
                     </div>
                 </div>
             </div>
             <div class="card action-card board-section">
                 <div class="card-header ">
-                    <h3 id="currentPlayer">End your turn by clicking done. </h3>
+                    <h3 id="currentPlayer">End your turn by clicking done.</h3>
                 </div>
                 <div class="card-body ">
                     <div class="dice-wrap ">
                         <div class="dice-btn-wrap ">
-                            <img id="dice-0" src="img/dice-1.png " alt="dice " class="dice ">
+                            <img id="dice-0" src="img/dice-1.png " alt="dice" class="dice" />
                             <button id="0" class="btn btn-warning btn-sm ">Hold</button>
                         </div>
                         <div class="dice-btn-wrap ">
-                            <img id="dice-1" src="img/dice-2.png " alt="dice " class="dice ">
+                            <img id="dice-1" src="img/dice-2.png " alt="dice" class="dice" />
                             <button id="1" class="btn btn-warning btn-sm ">Hold</button>
                         </div>
                         <div class="dice-btn-wrap ">
-                            <img id="dice-2" src="img/dice-3.png " alt="dice " class="dice ">
+                            <img id="dice-2" src="img/dice-3.png " alt="dice" class="dice" />
                             <button id="2" class="btn btn-warning btn-sm ">Hold</button>
                         </div>
                         <div class="dice-btn-wrap ">
-                            <img id="dice-3" src="img/dice-4.png " alt="dice " class="dice ">
+                            <img id="dice-3" src="img/dice-4.png " alt="dice" class="dice" />
                             <button id="3" class="btn btn-warning btn-sm ">Hold</button>
                         </div>
                         <div class="dice-btn-wrap ">
-                            <img id="dice-4" src="img/dice-5.png " alt="dice " class="dice ">
-                            <button id="4" class="btn btn-warning btn-sm ">Hold</button >
+                            <img id="dice-4" src="img/dice-5.png " alt="dice" class="dice" />
+                            <button id="4" class="btn btn-warning btn-sm ">Hold</button>
                         </div>
                         <div class="cta ">
-                            <button id="btnRoll "  class="btn btn-danger " onclick="roll() ">Roll</button>
-                            <button id="btnDone " class="btn btn-success " onclick="done() ">Done</button >
+                            <button id="btnRoll " class="btn btn-danger " onclick="roll() ">
+                                Roll
+                            </button>
+                            <button id="btnDone " class="btn btn-success " onclick="done() ">
+                                Done
+                            </button>
                         </div>
                     </div>
-                  </div>
-               </div>
+                </div>
+            </div>
             <div class="rules board-section ">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere voluptate laboriosam accusamus dolore a veniam excepturi eum perferendis fuga quaerat eligendi, doloremque nostrum molestiae, sit, voluptas hic! Facilis, sunt excepturi!
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam magni autem rerum corporis explicabo earum cupiditate delectus culpa illum fugit, magnam, quisquam distinctio ex. Ea ducimus temporibus vero quo.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic vero amet consequuntur? Possimus expedita aperiam earum, et beatae sint dolores dicta esse sit ipsum officia quaerat asperiores iusto blanditiis reprehenderit.
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos iure numquam quis dicta possimus ex tempora quia. Tempora obcaecati dolorem natus ad asperiores, nihil doloremque alias fuga neque expedita? Repellendus.
+                <h5>Game rules:</h5>
+                <p>In this game players roll dice and try to collect the lowest score. A 4 counts as zero, all other numbers count as face value. A player’s score is the total spots showing on the dice when she finishes her turn (excluding fours because
+                    they’re zero). The object of the game is to get the lowest score possible.</p>
+                <h5>The game is played as played as follows between 5 players</h5>
+                <ul>
+                    <li>Play starts with one person randomly being chosen to start rolling and proceeds in succession until all players have rolled.</li>
+                    <li>The player rolls all five dice, then must keep at least one dice but may keep more at her discretion (She can stop on her first roll if she so wishes).</li>
+                    <li>Those dice which are not kept are rolled again and each round she must keep at least one more until all the dice are out.</li>
+                    <li>Once each player has rolled the player who scored the lowest wins.</li>
+                    <li>Repeat for three more rounds in succession so that the next person starts rolling first (at the end each player will have started).</li>
+                </ul>
+                <p>After all four rounds have been completed the player with the lowest combined score wins.</p>
             </div>
         </section>
         <section class="controls ">
-          <button class="btn btn-primary btn-lg " onclick="playGame() ">Start Game!</button>
+            <button class="btn btn-primary btn-lg " onclick="playGame() ">
+                Start Game!
+            </button>
         </section>
     </main>
     <script src="app.js "></script>
