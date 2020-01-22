@@ -38,7 +38,6 @@ class Die {
         return this.imgPath = setImgPath(this.dieValue);
     }
 
-
     setValue = (dieValue) => {
         dieValue === 4 ? this.dieValue = 0 : this.dieValue;
     }
@@ -230,13 +229,6 @@ const addChoice = () => {
     const displayCurrentPlayer = document.getElementById('currentPlayer');
     displayCurrentPlayer.textContent = `Player: ${player.name}    Total:  ${player.total}`;
 
-    // This would be used for an actual game not simulation
-    // Set button status
-    // e.target.innerHTML = 'Held';
-
-    // Set dice held
-    // let targetId = e.target.id;
-    // dice[targetId].held = true;
 }
 
 const randomDie = () => {
