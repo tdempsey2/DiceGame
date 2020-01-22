@@ -167,6 +167,6 @@
     
     .rules {
         overflow-y: scroll;
-        padding: 1rem 1rem 1rem 1.25rem;
+        padding: 0 1rem 1rem 1.25rem;
         width: 30%;
     }

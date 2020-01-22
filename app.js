@@ -18,14 +18,6 @@ class Player {
         const createId = 'p-' + this.player;
         return this.userId = createId;
     }
-
-    setTotal = (total) => {
-        this.total += total;
-    }
-
-    getTotal = () => {
-        return this.total;
-    }
 }
 
 class Die {
@@ -48,7 +40,7 @@ class Die {
 
 
     setValue = (dieValue) => {
-        this.dieValue === 4 ? this.dieValue = 0 : this.dieValue;
+        dieValue === 4 ? this.dieValue = 0 : this.dieValue;
     }
 
     getValue = () => {
@@ -98,7 +90,6 @@ const playGame = () => {
 
     getWinner();
 }
-
 
 const loadDice = () => {
     // Create and Load Dice to dom and array
