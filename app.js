@@ -1,22 +1,22 @@
-let round = 1,
-    rounds, roundDone;
-const roundsDone = new Array();
-const users = new Array();
-const diceToRoll = new Array();
-const diceRolled = new Array();
+let round = 0,
+    currentPlayer,
+    currentPlayerIterator;
 
-class User {
+
+const users = new Array();
+const dice = new Array();
+
+class Player {
     constructor(name, player) {
         this.userId = '';
         this.name = name;
         this.player = player;
         this.total = 0;
-
     }
 
     getId = () => {
-        const creatId = 'p-' + this.player;
-        return this.userId = creatId;
+        const createId = 'p-' + this.player;
+        return this.userId = createId;
     }
 
     setTotal = (total) => {
@@ -26,82 +26,341 @@ class User {
     getTotal = () => {
         return this.total;
     }
-};
+}
 
-let createUser = (name, player) => {
-    const newPlayer = new User(name, player);
+class Die {
+    constructor(dieValue, held, dieId) {
+        this.dieId = dieId;
+        this.dieValue = dieValue;
+        this.held = held;
+        this.imgPath = '';
+    }
+
+    getDieId = () => {
+        const createDieId = 'dice-' + this.dieId;
+        return this.dieId = createDieId;
+    }
+
+    getImgPath = () => {
+        this.dieValue === 0 ? this.dieValue = 4 : this.dieValue;
+        return this.imgPath = setImgPath(this.dieValue);
+    }
+
+
+    setValue = (dieValue) => {
+        this.dieValue === 4 ? this.dieValue = 0 : this.dieValue;
+    }
+
+    getValue = () => {
+        return this.dieValue;
+    }
+}
+
+let createPlayer = (name, player) => {
+    const newPlayer = new Player(name, player);
     newPlayer.name = name;
     newPlayer.userId = player;
     newPlayer.total = 0;
     newPlayer.diceToRoll;
     let id = newPlayer.getId();
-    console.log('userId :', id, 'name :', name);
 
+    // Add players and totals to cards
     let addUserName = document.getElementById(id);
     addUserName.innerHTML = newPlayer.name;
 
     let addUserTotal = document.getElementById(id + '-total');
     addUserTotal.innerHTML = newPlayer.total;
-    users.push({ id: id, name: newPlayer.name, total: newPlayer.total });
+    users.push({ id: id, player: newPlayer.player, name: newPlayer.name, total: newPlayer.total });
+}
+
+let createDie = (dieValue, held, dieId) => {
+    const newDie = new Die(dieValue, held, dieId);
+    newDie.setValue(dieValue);
+    newDie.held = held;
+    dice.push({ id: newDie.getDieId(), value: newDie.getValue(), held: newDie.held, path: newDie.getImgPath() })
 }
 
 const playGame = () => {
+
     clearDom();
 
     // Create 4 players. Normally they would come from input fields
-    createUser('Chris', 1);
-    createUser('Terry', 2);
-    createUser('Jamie', 3);
-    createUser('Drew', 4);
-    // let showPanels = document.querySelectorAll('.players-panel');
-    // console.log('showPanels :', showPanels);
+    createPlayer('Chris', 0);
+    createPlayer('Terry', 1);
+    createPlayer('Jamie', 2);
+    createPlayer('Drew', 3);
 
-    // Get random user
-    let randUser = Math.floor(Math.random() * 4);
-    let firstPlayer = users[randUser];
-    roll(firstPlayer);
-    while (round < 4 && !roundDone) {
-        round += 1;
-        trackRounds();
-    }
+    loadDice();
+
+    getRandomPlayer();
+
+    startSimulation();
+
     getWinner();
 }
 
 
-const roll = (user) => {
-    console.log('user :', user);
-    let numDice = diceToRoll.length;
-    console.log('numDice :', numDice);
-    let i = 0;
-    // if (numDice = 0) {
-    //     // Load Dice
-    console.log('here :', "here2");
-    for (i; i < 5; i++) {
-        let dice = Math.floor(Math.random() * 6) + 1;
-        diceToRoll.push(dice);
-        console.log('user :', diceToRoll);
-    }
-    // }
+const loadDice = () => {
+    // Create and Load Dice to dom and array
+    for (i = 0; i < 5; i++) {
+        let die = randomDie();
+        createDie(die, false, i);
 
+        let tempDie = dice[i];
+        let tempPath = tempDie.path;
+        let tempId = 'dice-' + i;
+        let tempValue = tempDie.value;
+
+        // Display dice
+        let diceDom = document.getElementById(tempId);
+        console.log('die :', diceDom);
+        diceDom.src = tempPath;
+
+        // Add value to button
+        let cta = diceDom.nextElementSibling;
+        cta.addEventListener('click', addChoice);
+        cta.value = tempValue;
+    }
 }
 
-const trackRounds = () => {
+const roll = () => {
+    const tempArr = dice.filter(s => !s.held)
+    let arrLength = tempArr.length;
+    let i = 0;
+    for (i; i < arrLength; i++) {
 
+        // Find the id of the yet to be held
+        let tempId = tempArr[i].id;
+
+        // Generate new value
+        let die = randomDie();
+
+        // Set new value in original array and update
+        let newDie = dice.find(tid => tid.id === tempId);
+        newDie.value = die;
+        newDie.path = setImgPath(die);
+
+        // Display dice
+        let diceDom = document.getElementById(tempId);
+        diceDom.src = newDie.path;
+    }
+}
+
+const done = () => {
+    // Empty the dice array
+    dice.length = 0;
+
+    // Get all the add buttons and set the tex to default.
+    // Not for simulation
+    let addBtn = document.querySelectorAll('.dice-btn-wrap button');
+    btnLength = addBtn.length;
+    let i = 0;
+    for (i; i < btnLength; i++) {
+        addBtn[i].innerHTML = 'Hold'
+    }
+    // Increment player
+    setCurrentPlayer();
+
+    // Reload the buttons
+    loadDice();
+}
+
+setImgPath = (value) => {
+    return imgPath = 'img/dice-' + value + '.png';
+}
+
+// Simulated choice actual choice code is below
+const addChoice = () => {
+
+    let tempChoice = randomDie();
+
+    // Add value to Player total
+    let player = currentPlayer;
+    console.log('player 1st :', player);
+    player.total += parseInt(tempChoice);
+    console.log('player 2nd :', player);
+
+    //Update score and count
+    let playerTotal = document.getElementById(player.id + '-total');
+    playerTotal.innerHTML = player.total;
+    console.log('users in add :', users);
+
+    const displayCurrentPlayer = document.getElementById('currentPlayer');
+    displayCurrentPlayer.textContent = `Player: ${player.name}    Total:  ${player.total}`;
+    // stopPropagation();
+}
+
+const displayRound = () => {
+    round += 1;
     let displayRound = document.getElementById('roundOutput');
     displayRound.innerHTML = round;
     console.log('displayRound :', displayRound);
-
 }
 
 const getWinner = () => {
-    // Check users array for lowest score(s)
+    console.log('users bob :', users);
+    const tempArray = users;
+    console.log('tempArray :', tempArray);
 
-    // Determine winners name(s)
+    // Check users array for lowest score(s)
+    tempArray.sort(function(a, b) { return a.total - b.total });
+    const winningTotal = tempArray[0].total;
+    console.log('mapArr :', tempArray);
+
+    //Determine winners name(s)
+    const winners = tempArray.filter(w => w.total === winningTotal);
+    let length = winners.length;
+    let winner = '';
+    let i = 0;
+    if (length === 1) {
+        winner += winners[i].name;
+    } else {
+        for (i; i < length; i++) {
+            winner += winners[i].name;
+            winner += ' and '
+        }
+    }
+    winner += ` won with ${winningTotal} points!`
 
     // Display winners
-
+    const displayWinner = document.getElementById('headText');
+    displayWinner.textContent = winner;
 }
 
 const clearDom = () => {
     users.length = 0;
+    dice.length = 0;
+    round = 0;
 }
+
+const randomDie = () => {
+    let die = Math.floor(Math.random() * 6) + 1;
+    return die;
+}
+
+const getRandomPlayer = () => {
+    // Get random Player
+    let randUser = Math.floor(Math.random() * 4);
+    currentPlayer = users[randUser];
+    currentPlayerIterator = currentPlayer.player;
+    console.log('currentPlayer :', currentPlayer);
+}
+
+const setCurrentPlayer = () => {
+    let index = currentPlayerIterator;
+    index === 3 ? index = 0 : index += 1;
+    currentPlayerIterator = index;
+    currentPlayer = users[index];
+}
+
+const chooseFour = () => {
+    roll();
+    let i = 0;
+    for (i; i < 4; i++) {
+        addChoice();
+    }
+    done();
+}
+
+const chooseThreeOne = () => {
+    let i = 0;
+    roll();
+    for (i; i < 3; i++) {
+        addChoice();
+    }
+    roll();
+    addChoice();
+    done();
+}
+
+const chooseTwo = () => {
+    let i = 0;
+    for (i; i < 2; i++) {
+        roll();
+        addChoice();
+        addChoice();
+    }
+    done();
+}
+
+const chooseOne = () => {
+    let i = 0;
+    for (i; i < 4; i++) {
+        roll();
+        addChoice();
+    }
+    done();
+}
+const startSimulation = () => {
+    let i = 0;
+    let totalTurns = users.length * 4;
+    for (i; i < totalTurns; i++) {
+        // setTimeout(() => {
+        //     simulateRounds();
+        // }, 1000);
+        simulateRounds();
+
+        if (i % 4 === 0) {
+            displayRound();
+        }
+    }
+}
+const simulateRounds = () => {
+    let roller = currentPlayerIterator;
+    console.log('roller :', roller);
+
+    switch (roller) {
+        case 4:
+            return chooseFour();
+            break;
+        case 3:
+            return chooseThreeOne();
+            break;
+        case 2:
+            return chooseTwo();
+            break
+        case 1:
+            return chooseOne();
+            break
+        default:
+            return chooseFour();
+            // case 4:
+            //     return setTimeout(chooseFour, 1000);
+            //     break;
+            // case 3:
+            //     return setTimeout(chooseThreeOne, 1000);
+            //     break;
+            // case 2:
+            //     return setTimeout(chooseTwo, 1000);
+            //     break
+            // case 1:
+            //     return setTimeout(chooseOne, 1000);
+            //     break
+            // default:
+            //     return setTimeout(chooseFour, 1000);
+    }
+}
+
+// use this for actual game
+// const addChoice = (e) => {
+//     // Get value emitted
+//     let tempChoice = e.target.value;
+
+//     // Add value to Player total
+//     let player = currentPlayer;
+//     player.total += parseInt(tempChoice);
+//     console.log('a :', player);
+
+//     //Update score and count
+//     let playerTotal = document.getElementById(player.id + '-total');
+//     playerTotal.innerHTML = player.total;
+
+
+//     // Set button status
+//     e.target.innerHTML = 'Held';
+
+//     // Set dice held
+//     let targetId = e.target.id;
+//     dice[targetId].held = true;
+
+// }

@@ -35,7 +35,8 @@
         color: orange;
     }
     
-    .h3 {
+    .h3,
+    .h4 {
         font-size: 1rem;
     }
     
@@ -48,10 +49,6 @@
         background-color: #fff;
         box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
         overflow: hidden;
-    }
-    
-    .board {
-        position: relative;
     }
     
     .round-wrap {
@@ -68,10 +65,16 @@
         margin: 0;
     }
     
+    .board-section {
+        width: 50%;
+    }
+    
     .board {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-evenly;
+        padding: 0 3rem;
+        position: relative;
+        height: 34vh;
     }
     
     .dice {
@@ -107,7 +110,7 @@
     }
     
     .card {
-        margin: .5rem;
+        margin: 0 .5rem;
         text-align: center;
         font-weight: bold;
         color: white;
@@ -127,20 +130,33 @@
         background-color: blue;
     }
     
-    .action-card .card-title {
-        padding: 1.25rem;
+    .action-card .card-header {
+        padding: 1rem 1.25rem .25rem 1.25rem;
     }
     
     .action-card .card-body {
-        padding: 1rem 1.25rem 0 1.25rem;
+        padding: 0 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .player-card-wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     
     .card.player-card {
         background-color: slategrey;
     }
-    /* .players-panel {
-        display: none;
-    } */
+    
+    .player-card .card-body {
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem;
+        width: 15vw;
+    }
     
     .status {
         display: flex;
@@ -150,11 +166,8 @@
         align-items: flex-end;
     }
     
-    .winner {
-        background-color: #f7f7f7;
-    }
-    
-    .winner .player-name {
-        font-weight: 300;
-        color: #EB4D4D;
+    .rules {
+        overflow-y: scroll;
+        padding: 1rem;
+        width: 30%;
     }
